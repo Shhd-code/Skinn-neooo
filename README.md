@@ -1,6 +1,6 @@
--- SH SKIN CHANGER - نسخة الـ RGB الفخمة
-if game:GetService("CoreGui"):FindFirstChild("CharSwapper_RGB") then
-    game:GetService("CoreGui"):FindFirstChild("CharSwapper_RGB"):Destroy()
+-- SH SKIN CHANGER - النسخة الكاملة المطورة (31 سكن + RGB)
+if game:GetService("CoreGui"):FindFirstChild("SH_SkinChanger_Ultimate") then
+    game:GetService("CoreGui"):FindFirstChild("SH_SkinChanger_Ultimate"):Destroy()
 end
 
 local ScreenGui = Instance.new("ScreenGui")
@@ -14,8 +14,8 @@ local AllTab = Instance.new("TextButton")
 local ScrollingFrame = Instance.new("ScrollingFrame")
 local UIGridLayout = Instance.new("UIGridLayout")
 
--- إعدادات اللوحة
-ScreenGui.Name = "CharSwapper_RGB"
+-- إعدادات الشاشة واللوحة
+ScreenGui.Name = "SH_SkinChanger_Ultimate"
 ScreenGui.Parent = game:GetService("CoreGui")
 
 MainFrame.Parent = ScreenGui
@@ -29,7 +29,6 @@ MainFrame.Draggable = true
 UICorner.CornerRadius = UDim.new(0, 15)
 UICorner.Parent = MainFrame
 
--- حواف ملونة متغيرة (RGB) للوحة الرئيسية
 UIStroke.Thickness = 2.5
 UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 UIStroke.Parent = MainFrame
@@ -42,7 +41,7 @@ Title.Font = Enum.Font.GothamBold
 Title.TextSize = 18
 Title.BackgroundTransparency = 1
 
--- الأزرار العلوية
+-- نظام التبويب (لي / الكل)
 TabFrame.Parent = MainFrame
 TabFrame.Position = UDim2.new(0.05, 0, 0.16, 0)
 TabFrame.Size = UDim2.new(0.9, 0, 0, 35)
@@ -52,10 +51,10 @@ local targetMode = "me"
 
 local function updateTabs()
     if targetMode == "me" then
-        MeTab.BackgroundColor3 = Color3.fromRGB(40, 40, 40) -- خلفية داكنة للتبويب
+        MeTab.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
         AllTab.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
     else
-        AllTab.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+        AllTab.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
         MeTab.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
     end
 end
@@ -79,13 +78,13 @@ MeTab.MouseButton1Click:Connect(function() targetMode = "me" updateTabs() end)
 AllTab.MouseButton1Click:Connect(function() targetMode = "all" updateTabs() end)
 updateTabs()
 
--- التمرير (CanvasSize مصلح)
+-- إطار السكنات مع التمرير المصلح
 ScrollingFrame.Parent = MainFrame
 ScrollingFrame.Position = UDim2.new(0.05, 0, 0.32, 0)
 ScrollingFrame.Size = UDim2.new(0.9, 0, 0.63, 0)
 ScrollingFrame.BackgroundTransparency = 1
 ScrollingFrame.ScrollBarThickness = 3
-ScrollingFrame.CanvasSize = UDim2.new(0, 0, 2.8, 0) 
+ScrollingFrame.CanvasSize = UDim2.new(0, 0, 3.2, 0) -- زيادة المساحة لتكفي كل السكنات
 
 UIGridLayout.Parent = ScrollingFrame
 UIGridLayout.CellSize = UDim2.new(0, 80, 0, 80)
@@ -93,7 +92,9 @@ UIGridLayout.CellPadding = UDim2.new(0, 10, 0, 10)
 
 local adminRemote = game:GetService("ReplicatedStorage").HDAdminHDClient.Signals.RequestCommandModification
 
+-- القائمة الكاملة المحدثة (31 سكن)
 local skinList = {
+    "vilillri", "lol1593570", "9elrees", "ahmd19027", -- الجدد
     "iipietro_gamery2k", "husen", "Rynoy5", "Im_w7x", "aeonofreason", 
     "hsenhse_8", "c00ldude452311", "Asdfgh92828", "Mariannap014", 
     "mar_gamez725", "marceelditya", "mar498187", "marcosgrand281", 
@@ -128,7 +129,7 @@ for _, name in pairs(skinList) do
     end)
 end
 
--- زر الميني (👗) مع حواف RGB
+-- زر الميني (👗) RGB
 local ToggleBtn = Instance.new("TextButton")
 local ToggleCorner = Instance.new("UICorner")
 local ToggleStroke = Instance.new("UIStroke")
@@ -163,11 +164,11 @@ ToggleBtn.MouseButton1Click:Connect(function()
     MainFrame.Visible = not MainFrame.Visible
 end)
 
--- كود تشغيل الـ RGB (تغيير الألوان بسلاسة)
+-- تأثير الـ RGB السلس
 task.spawn(function()
     while true do
-        local hue = tick() % 5 / 5 -- يكمل دورة ألوان كل 5 ثواني
-        local color = Color3.fromHSV(hue, 0.8, 1)
+        local hue = tick() % 5 / 5
+        local color = Color3.fromHSV(hue, 0.7, 1)
         UIStroke.Color = color
         ToggleStroke.Color = color
         ScrollingFrame.ScrollBarImageColor3 = color
