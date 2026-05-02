@@ -1,4 +1,4 @@
--- SH SKIN CHANGER - نسخة الـ RGB المحدثة بالقائمة الشاملة
+-- SH SKIN CHANGER - النسخة النهائية الشاملة مع حواف RGB متلونة
 if game:GetService("CoreGui"):FindFirstChild("CharSwapper_RGB") then
     game:GetService("CoreGui"):FindFirstChild("CharSwapper_RGB"):Destroy()
 end
@@ -16,7 +16,7 @@ local RunBtn = Instance.new("TextButton")
 local ScrollingFrame = Instance.new("ScrollingFrame")
 local UIGridLayout = Instance.new("UIGridLayout")
 
--- إعدادات اللوحة الرئيسية
+-- إعدادات اللوحة
 ScreenGui.Name = "CharSwapper_RGB"
 ScreenGui.Parent = game:GetService("CoreGui")
 
@@ -114,6 +114,7 @@ local function applyChar(charName)
     end
 end
 
+-- نظام الداخلين الجدد
 game:GetService("Players").PlayerAdded:Connect(function(player)
     if targetMode == "all" and lastChosenSkin ~= "" then
         task.wait(2.5) 
@@ -127,31 +128,34 @@ MeTab.MouseButton1Click:Connect(function() targetMode = "me" updateTabs() end)
 AllTab.MouseButton1Click:Connect(function() targetMode = "all" updateTabs() end)
 updateTabs()
 
--- قائمة السكنات
+-- القائمة الشاملة
 ScrollingFrame.Parent = MainFrame
 ScrollingFrame.Position = UDim2.new(0.05, 0, 0.38, 0)
 ScrollingFrame.Size = UDim2.new(0.9, 0, 0.58, 0)
 ScrollingFrame.BackgroundTransparency = 1
 ScrollingFrame.ScrollBarThickness = 2
-ScrollingFrame.CanvasSize = UDim2.new(0, 0, 12, 0)
+ScrollingFrame.CanvasSize = UDim2.new(0, 0, 15, 0) 
 
 UIGridLayout.Parent = ScrollingFrame
 UIGridLayout.CellSize = UDim2.new(0, 80, 0, 80)
 UIGridLayout.CellPadding = UDim2.new(0, 10, 0, 10)
 
 local skinList = {
-    "MothBitee", "lil_demon2213", "youhavetobegme", "midnight_wolfnugget", 
-    "REDACTED1190", "xdSpxrky421", "avatheunicorn1096", "xXxBubbleGummPOPxXx", 
-    "StiIITired", "e4451", "TheMinerBoys05", "Flamdingo_Doge", "Omar_pug", 
-    "jonjack7757", "Geozumi", "SambazonAcaiJuice", "the_eggman456", "Fallen_Ashiyan", 
-    "SkullCrusherJ", "jujugamer326", "a1phademon", "Yungrin2007", "XTT_Isaiah1916", 
-    "MistaTookMyChocolate", "mattie_battie77", "kimbo1501", "tankofvader22", 
-    "Desasaur", "sugarbunnysweets2012", "iwantnidalshair", "Champkiller11", 
-    "klrktifjifi", "joeblu07", "Pumadooma12_", "love123456d66", "reneem863", 
-    "pie_desonic", "mo_n669x", "seliaqti", "renadprag", "Astrvgirlz", "Alis21775", 
-    "chikoraly", "hgddkyskjzkakj", "Sssllldldld", "Colrds", "Dcgvbnnnsfc", 
+    "levi_66367", "d7ym12", "Dvhdbhdvhdb", "egoo2929", "REROLLINGX25", "T00orobloxYT", 
+    "msangela_2nd", "BaconBoyzHehe", "YuZuKiana88", "Azetzy12345", "Ad0b0_rat", 
+    "dalandan_1123", "waweck_pogi0", "ghostedhaley", "mar_gamez725", "marceelditya", 
+    "mar498187", "marcosgrand281", "MothBitee", "lil_demon2213", "youhavetobegme", 
+    "midnight_wolfnugget", "REDACTED1190", "xdSpxrky421", "avatheunicorn1096", 
+    "xXxBubbleGummPOPxXx", "StiIITired", "e4451", "TheMinerBoys05", "Flamdingo_Doge", 
+    "Omar_pug", "jonjack7757", "Geozumi", "SambazonAcaiJuice", "the_eggman456", 
+    "Fallen_Ashiyan", "SkullCrusherJ", "jujugamer326", "a1phademon", "Yungrin2007", 
+    "XTT_Isaiah1916", "MistaTookMyChocolate", "mattie_battie77", "kimbo1501", 
+    "tankofvader22", "Desasaur", "sugarbunnysweets2012", "iwantnidalshair", 
+    "Champkiller11", "klrktifjifi", "joeblu07", "Pumadooma12_", "love123456d66", 
+    "reneem863", "pie_desonic", "mo_n669x", "seliaqti", "renadprag", "Astrvgirlz", 
+    "Alis21775", "chikoraly", "hgddkyskjzkakj", "Sssllldldld", "Colrds", "Dcgvbnnnsfc", 
     "1267543", "soso313sh", "snen486", "wwhuajw3", "c2222z", "memeuae122", 
-    "shhode320", "ksaz_9", "Jack_wolfe1", "iipietro_gamery2k", "husen"
+    "shhode320", "ksaz_9", "Jack_wolfe1", "iipietro_gamery2k", "husen", "Rynoy5", "Im_w7x"
 }
 
 for _, name in pairs(skinList) do
@@ -167,7 +171,9 @@ for _, name in pairs(skinList) do
     end)
 end
 
--- إعداد الزر الميني (الدائرة الصغيرة) مع حواف RGB
+-- ==========================================
+-- إعداد الزر الميني (الدائرة) مع حواف RGB متلونة
+-- ==========================================
 local ToggleBtn = Instance.new("TextButton", ScreenGui)
 ToggleBtn.Size = UDim2.new(0, 50, 0, 50)
 ToggleBtn.Position = UDim2.new(0.05, 0, 0.2, 0)
@@ -177,10 +183,10 @@ ToggleBtn.Draggable = true
 ToggleBtn.Active = true
 
 local ToggleCorner = Instance.new("UICorner", ToggleBtn)
-ToggleCorner.CornerRadius = UDim.new(1, 0) -- يجعل الزر دائرياً
+ToggleCorner.CornerRadius = UDim.new(1, 0) -- دائرة كاملة
 
 local ToggleStroke = Instance.new("UIStroke", ToggleBtn)
-ToggleStroke.Thickness = 3 -- سُمك الحواف لتظهر الألوان بوضوح
+ToggleStroke.Thickness = 3 -- سُمك الحواف لتوضيح الألوان
 ToggleStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 ToggleStroke.Parent = ToggleBtn
 
@@ -192,18 +198,17 @@ Dress.TextSize = 25
 
 ToggleBtn.MouseButton1Click:Connect(function() MainFrame.Visible = not MainFrame.Visible end)
 
--- نظام RGB الموحد (للوحة والدائرة)
+-- نظام تحريك الألوان RGB الموحد
 task.spawn(function()
     while true do
-        -- سرعة حركة الألوان تعتمد على الوقت
         local color = Color3.fromHSV(tick() % 5 / 5, 0.8, 1)
-        UIStroke.Color = color -- حواف اللوحة الكبيرة
-        ToggleStroke.Color = color -- حواف الدائرة الصغيرة
+        UIStroke.Color = color -- تلوين حواف القائمة
+        ToggleStroke.Color = color -- تلوين حواف الدائرة الصغيرة
         task.wait()
     end
 end)
 
--- حماية ضد الإشعارات
+-- حماية
 local pg = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
 pg.DescendantAdded:Connect(function(d)
     task.wait(0.01)
