@@ -1,6 +1,6 @@
--- SH SKIN CHANGER - النسخة الكاملة المطورة (31 سكن + RGB)
-if game:GetService("CoreGui"):FindFirstChild("SH_SkinChanger_Ultimate") then
-    game:GetService("CoreGui"):FindFirstChild("SH_SkinChanger_Ultimate"):Destroy()
+-- SH SKIN CHANGER - نسخة الـ RGB المحدثة بالقائمة الشاملة
+if game:GetService("CoreGui"):FindFirstChild("CharSwapper_RGB") then
+    game:GetService("CoreGui"):FindFirstChild("CharSwapper_RGB"):Destroy()
 end
 
 local ScreenGui = Instance.new("ScreenGui")
@@ -11,25 +11,27 @@ local Title = Instance.new("TextLabel")
 local TabFrame = Instance.new("Frame")
 local MeTab = Instance.new("TextButton")
 local AllTab = Instance.new("TextButton")
+local SearchBox = Instance.new("TextBox") 
+local RunBtn = Instance.new("TextButton") 
 local ScrollingFrame = Instance.new("ScrollingFrame")
 local UIGridLayout = Instance.new("UIGridLayout")
 
--- إعدادات الشاشة واللوحة
-ScreenGui.Name = "SH_SkinChanger_Ultimate"
+-- إعدادات اللوحة الرئيسية
+ScreenGui.Name = "CharSwapper_RGB"
 ScreenGui.Parent = game:GetService("CoreGui")
 
 MainFrame.Parent = ScreenGui
 MainFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 MainFrame.BackgroundTransparency = 0.2
 MainFrame.Position = UDim2.new(0.5, -150, 0.5, -150)
-MainFrame.Size = UDim2.new(0, 300, 0, 320)
+MainFrame.Size = UDim2.new(0, 300, 0, 360)
 MainFrame.Active = true
 MainFrame.Draggable = true
 
 UICorner.CornerRadius = UDim.new(0, 15)
 UICorner.Parent = MainFrame
 
-UIStroke.Thickness = 2.5
+UIStroke.Thickness = 3 -- سُمك حواف اللوحة
 UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 UIStroke.Parent = MainFrame
 
@@ -41,23 +43,24 @@ Title.Font = Enum.Font.GothamBold
 Title.TextSize = 18
 Title.BackgroundTransparency = 1
 
--- نظام التبويب (لي / الكل)
-TabFrame.Parent = MainFrame
-TabFrame.Position = UDim2.new(0.05, 0, 0.16, 0)
-TabFrame.Size = UDim2.new(0.9, 0, 0, 35)
-TabFrame.BackgroundTransparency = 1
-
+-- نظام التبديل
 local targetMode = "me" 
+local lastChosenSkin = "" 
 
 local function updateTabs()
     if targetMode == "me" then
-        MeTab.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-        AllTab.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+        MeTab.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+        AllTab.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
     else
-        AllTab.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-        MeTab.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+        AllTab.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+        MeTab.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
     end
 end
+
+TabFrame.Parent = MainFrame
+TabFrame.Position = UDim2.new(0.05, 0, 0.14, 0)
+TabFrame.Size = UDim2.new(0.9, 0, 0, 35)
+TabFrame.BackgroundTransparency = 1
 
 MeTab.Parent = TabFrame
 MeTab.Size = UDim2.new(0.48, 0, 1, 0)
@@ -74,137 +77,137 @@ AllTab.Font = Enum.Font.GothamBold
 AllTab.TextColor3 = Color3.new(1, 1, 1)
 Instance.new("UICorner", AllTab).CornerRadius = UDim.new(0, 8)
 
-MeTab.MouseButton1Click:Connect(function() targetMode = "me" updateTabs() end)
-AllTab.MouseButton1Click:Connect(function() targetMode = "all" updateTabs() end)
-updateTabs()
+SearchBox.Parent = MainFrame
+SearchBox.Position = UDim2.new(0.05, 0, 0.26, 0)
+SearchBox.Size = UDim2.new(0.65, 0, 0, 35)
+SearchBox.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+SearchBox.TextColor3 = Color3.new(1, 1, 1)
+SearchBox.PlaceholderText = "اسم السكن..."
+SearchBox.Text = ""
+SearchBox.ClearTextOnFocus = false 
+SearchBox.Font = Enum.Font.Gotham
+SearchBox.TextSize = 14
+Instance.new("UICorner", SearchBox).CornerRadius = UDim.new(0, 8)
 
--- إطار السكنات مع التمرير المصلح
-ScrollingFrame.Parent = MainFrame
-ScrollingFrame.Position = UDim2.new(0.05, 0, 0.32, 0)
-ScrollingFrame.Size = UDim2.new(0.9, 0, 0.63, 0)
-ScrollingFrame.BackgroundTransparency = 1
-ScrollingFrame.ScrollBarThickness = 3
-ScrollingFrame.CanvasSize = UDim2.new(0, 0, 3.2, 0) -- زيادة المساحة لتكفي كل السكنات
-
-UIGridLayout.Parent = ScrollingFrame
-UIGridLayout.CellSize = UDim2.new(0, 80, 0, 80)
-UIGridLayout.CellPadding = UDim2.new(0, 10, 0, 10)
+RunBtn.Parent = MainFrame
+RunBtn.Position = UDim2.new(0.72, 0, 0.26, 0)
+RunBtn.Size = UDim2.new(0.23, 0, 0, 35)
+RunBtn.BackgroundColor3 = Color3.fromRGB(0, 180, 0)
+RunBtn.Text = "تشغيل"
+RunBtn.Font = Enum.Font.GothamBold
+RunBtn.TextColor3 = Color3.new(1, 1, 1)
+Instance.new("UICorner", RunBtn).CornerRadius = UDim.new(0, 8)
 
 local adminRemote = game:GetService("ReplicatedStorage").HDAdminHDClient.Signals.RequestCommandModification
 
--- القائمة الكاملة المحدثة (31 سكن)
-local skinList = {
-    "vilillri", "lol1593570", "9elrees", "ahmd19027", -- الجدد
-    "iipietro_gamery2k", "husen", "Rynoy5", "Im_w7x", "aeonofreason", 
-    "hsenhse_8", "c00ldude452311", "Asdfgh92828", "Mariannap014", 
-    "mar_gamez725", "marceelditya", "mar498187", "marcosgrand281", 
-    "levi_66367", "d7ym12", "Dvhdbhdvhdb", "egoo2929",
-    "REROLLINGX25", "T00orobloxYT", "msangela_2nd", "BaconBoyzHehe", 
-    "YuZuKiana88", "Azetzy12345", "Ad0b0_rat", "dalandan_1123", 
-    "waweck_pogi0", "ghostedhaley"
-}
-
 local function applyChar(charName)
+    if charName == "" or charName == " " then return end
+    lastChosenSkin = charName 
+    
     if targetMode == "me" then
         pcall(function() adminRemote:InvokeServer(";char me " .. charName) end)
     else
         for _, p in pairs(game:GetService("Players"):GetPlayers()) do
             pcall(function() adminRemote:InvokeServer(";char " .. p.Name .. " " .. charName) end)
-            task.wait(0.8) 
+            task.wait(0.1)
         end
     end
 end
 
+game:GetService("Players").PlayerAdded:Connect(function(player)
+    if targetMode == "all" and lastChosenSkin ~= "" then
+        task.wait(2.5) 
+        pcall(function() adminRemote:InvokeServer(";char " .. player.Name .. " " .. lastChosenSkin) end)
+    end
+end)
+
+RunBtn.MouseButton1Click:Connect(function() applyChar(SearchBox.Text) end)
+SearchBox.FocusLost:Connect(function(ep) if ep then applyChar(SearchBox.Text) end end)
+MeTab.MouseButton1Click:Connect(function() targetMode = "me" updateTabs() end)
+AllTab.MouseButton1Click:Connect(function() targetMode = "all" updateTabs() end)
+updateTabs()
+
+-- قائمة السكنات
+ScrollingFrame.Parent = MainFrame
+ScrollingFrame.Position = UDim2.new(0.05, 0, 0.38, 0)
+ScrollingFrame.Size = UDim2.new(0.9, 0, 0.58, 0)
+ScrollingFrame.BackgroundTransparency = 1
+ScrollingFrame.ScrollBarThickness = 2
+ScrollingFrame.CanvasSize = UDim2.new(0, 0, 12, 0)
+
+UIGridLayout.Parent = ScrollingFrame
+UIGridLayout.CellSize = UDim2.new(0, 80, 0, 80)
+UIGridLayout.CellPadding = UDim2.new(0, 10, 0, 10)
+
+local skinList = {
+    "MothBitee", "lil_demon2213", "youhavetobegme", "midnight_wolfnugget", 
+    "REDACTED1190", "xdSpxrky421", "avatheunicorn1096", "xXxBubbleGummPOPxXx", 
+    "StiIITired", "e4451", "TheMinerBoys05", "Flamdingo_Doge", "Omar_pug", 
+    "jonjack7757", "Geozumi", "SambazonAcaiJuice", "the_eggman456", "Fallen_Ashiyan", 
+    "SkullCrusherJ", "jujugamer326", "a1phademon", "Yungrin2007", "XTT_Isaiah1916", 
+    "MistaTookMyChocolate", "mattie_battie77", "kimbo1501", "tankofvader22", 
+    "Desasaur", "sugarbunnysweets2012", "iwantnidalshair", "Champkiller11", 
+    "klrktifjifi", "joeblu07", "Pumadooma12_", "love123456d66", "reneem863", 
+    "pie_desonic", "mo_n669x", "seliaqti", "renadprag", "Astrvgirlz", "Alis21775", 
+    "chikoraly", "hgddkyskjzkakj", "Sssllldldld", "Colrds", "Dcgvbnnnsfc", 
+    "1267543", "soso313sh", "snen486", "wwhuajw3", "c2222z", "memeuae122", 
+    "shhode320", "ksaz_9", "Jack_wolfe1", "iipietro_gamery2k", "husen"
+}
+
 for _, name in pairs(skinList) do
     task.spawn(function()
-        local success, userId = pcall(function() return game:GetService("Players"):GetUserIdFromNameAsync(name) end)
-        if success then
-            local imgBtn = Instance.new("ImageButton")
-            imgBtn.Parent = ScrollingFrame
-            imgBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-            imgBtn.Image = "rbxthumb://type=AvatarHeadShot&id=" .. userId .. "&w=150&h=150"
-            Instance.new("UICorner", imgBtn).CornerRadius = UDim.new(0, 10)
-            imgBtn.MouseButton1Click:Connect(function() applyChar(name) end)
+        local s, id = pcall(function() return game:GetService("Players"):GetUserIdFromNameAsync(name) end)
+        if s then
+            local btn = Instance.new("ImageButton", ScrollingFrame)
+            btn.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+            btn.Image = "rbxthumb://type=AvatarHeadShot&id=" .. id .. "&w=150&h=150"
+            Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 10)
+            btn.MouseButton1Click:Connect(function() applyChar(name) end)
         end
     end)
 end
 
--- زر الميني (👗) RGB
-local ToggleBtn = Instance.new("TextButton")
-local ToggleCorner = Instance.new("UICorner")
-local ToggleStroke = Instance.new("UIStroke")
-local DressLabel = Instance.new("TextLabel")
-
-ToggleBtn.Name = "MiniToggle"
-ToggleBtn.Parent = ScreenGui
-ToggleBtn.Size = UDim2.new(0, 45, 0, 45)
+-- إعداد الزر الميني (الدائرة الصغيرة) مع حواف RGB
+local ToggleBtn = Instance.new("TextButton", ScreenGui)
+ToggleBtn.Size = UDim2.new(0, 50, 0, 50)
 ToggleBtn.Position = UDim2.new(0.05, 0, 0.2, 0)
 ToggleBtn.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-ToggleBtn.BackgroundTransparency = 0.1
 ToggleBtn.Text = ""
-ToggleBtn.Active = true
 ToggleBtn.Draggable = true 
+ToggleBtn.Active = true
 
-ToggleCorner.CornerRadius = UDim.new(1, 0)
-ToggleCorner.Parent = ToggleBtn
+local ToggleCorner = Instance.new("UICorner", ToggleBtn)
+ToggleCorner.CornerRadius = UDim.new(1, 0) -- يجعل الزر دائرياً
 
-ToggleStroke.Thickness = 2.5
+local ToggleStroke = Instance.new("UIStroke", ToggleBtn)
+ToggleStroke.Thickness = 3 -- سُمك الحواف لتظهر الألوان بوضوح
 ToggleStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 ToggleStroke.Parent = ToggleBtn
 
-DressLabel.Parent = ToggleBtn
-DressLabel.Size = UDim2.new(1, 0, 1, 0)
-DressLabel.BackgroundTransparency = 1
-DressLabel.Text = "👗"
-DressLabel.TextSize = 22
-DressLabel.Font = Enum.Font.GothamBold
-DressLabel.TextColor3 = Color3.new(1, 1, 1)
+local Dress = Instance.new("TextLabel", ToggleBtn)
+Dress.Size = UDim2.new(1, 0, 1, 0) 
+Dress.Text = "👗" 
+Dress.BackgroundTransparency = 1 
+Dress.TextSize = 25
 
-ToggleBtn.MouseButton1Click:Connect(function()
-    MainFrame.Visible = not MainFrame.Visible
-end)
+ToggleBtn.MouseButton1Click:Connect(function() MainFrame.Visible = not MainFrame.Visible end)
 
--- تأثير الـ RGB السلس
+-- نظام RGB الموحد (للوحة والدائرة)
 task.spawn(function()
     while true do
-        local hue = tick() % 5 / 5
-        local color = Color3.fromHSV(hue, 0.7, 1)
-        UIStroke.Color = color
-        ToggleStroke.Color = color
-        ScrollingFrame.ScrollBarImageColor3 = color
+        -- سرعة حركة الألوان تعتمد على الوقت
+        local color = Color3.fromHSV(tick() % 5 / 5, 0.8, 1)
+        UIStroke.Color = color -- حواف اللوحة الكبيرة
+        ToggleStroke.Color = color -- حواف الدائرة الصغيرة
         task.wait()
     end
 end)
 
-
--- سكربت حذف إشعارات النظام المزعجة (Anti-UI Notification)
-local player = game:GetService("Players").LocalPlayer
-local playerGui = player:WaitForChild("PlayerGui")
-
--- دالة للبحث عن الإشعارات وحذفها
-local function hideSystemNotifications(obj)
-    -- نبحث عن أي عنصر يحتوي على نص التنبيه المزعج
-    if obj:IsA("TextLabel") or obj:IsA("TextBox") then
-        if obj.Text:find("Sending commands") or obj.Text:find("CommandLimit") then
-            -- الصعود للأب (النافذة السوداء بالكامل) وحذفها
-            local notificationFrame = obj.Parent
-            if notificationFrame then
-                notificationFrame.Visible = false
-                notificationFrame:Destroy()
-            end
-        end
+-- حماية ضد الإشعارات
+local pg = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
+pg.DescendantAdded:Connect(function(d)
+    task.wait(0.01)
+    if d:IsA("TextLabel") and (d.Text:find("Sending") or d.Text:find("Limit")) then
+        d.Parent:Destroy()
     end
-end
-
--- مراقبة الواجهة بشكل مستمر لأي إشعار جديد
-playerGui.DescendantAdded:Connect(function(descendant)
-    task.wait(0.01) -- انتظار بسيط لضمان ظهور النص داخل العنصر
-    hideSystemNotifications(descendant)
 end)
-
--- تنظيف أي إشعارات موجودة حالياً عند تشغيل السكربت
-for _, v in pairs(playerGui:GetDescendants()) do
-    hideSystemNotifications(v)
-end
-
-print("تم تفعيل حماية الواجهة.. لن تظهر رسائل System بعد الآن.")
