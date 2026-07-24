@@ -134,7 +134,7 @@ ScrollingFrame.Position = UDim2.new(0.05, 0, 0.38, 0)
 ScrollingFrame.Size = UDim2.new(0.9, 0, 0.58, 0)
 ScrollingFrame.BackgroundTransparency = 1
 ScrollingFrame.ScrollBarThickness = 2
-ScrollingFrame.CanvasSize = UDim2.new(0, 0, 15, 0) 
+ScrollingFrame.CanvasSize = UDim2.new(0, 0, 0, 6000) 
 
 UIGridLayout.Parent = ScrollingFrame
 UIGridLayout.CellSize = UDim2.new(0, 80, 0, 80)
@@ -155,18 +155,68 @@ local skinList = {
     "reneem863", "pie_desonic", "mo_n669x", "seliaqti", "renadprag", "Astrvgirlz", 
     "Alis21775", "chikoraly", "hgddkyskjzkakj", "Sssllldldld", "Colrds", "Dcgvbnnnsfc", 
     "1267543", "soso313sh", "snen486", "wwhuajw3", "c2222z", "memeuae122", 
-    "shhode320", "ksaz_9", "Jack_wolfe1", "iipietro_gamery2k", "husen", "Rynoy5", "Im_w7x"
+    "shhode320", "ksaz_9", "Jack_wolfe1", "iipietro_gamery2k", "husen", "Rynoy5", "Im_w7x",
+    -- السكنات الجديدة
+    "Arabic_ritaj30", "yara94151", "Fwc684", "Ramas_meozk89", "Rosie25558",
+    "TAELOVETAEE", "Everest_Ind", "Fianda_junia", "Emanoele2954", "ywowoowow",
+    "Nursejulie620", "lolo_00486", "R2enad88", "Moko_fr9", "Lais_14169",
+    "Jayny621", "eva2di52", "fofa7abeebty", "nafolat", "ALNA_C",
+    "BT_lie", "feasabes", "Cookie_sor", "ayap219", "shaza_aiany1",
+    "remanyyy66", "4eshzzz", "Julia_squidgame1", "Sosa_2311", "saudAlharbi1985",
+    "camus265", "Txi_r", "kronica10", "RIVEROYT1", "mutlaq123578",
+    "jesus126294", "sjrisidu", "xSupra56", "FabianRs1", "Brxan6969",
+    "F157O1KDD", "AbuDha900", "xlo_iu707", "eeyyo_78", "Just_F3o",
+    "ks_a799", "tswrtnnyee777", "abo7rb_111x", "asd7077", "maoon211q",
+    "Yagajshehhdhahdh", "SAsa_eeeee", "koog727", "Trmkee2", "mohamed159k",
+    "trll_79", "3bvx7", "DtxDiablo", "Not_Rade", "Jawedvdffrgg90",
+    "PA_989", "SHADXLS", "zc62m", "Dhaviks2847", "Wabaaaaaauuuuu",
+    "navi714ga", "Colochito_TKG", "J6xln", "Flaco9212", "Maynor2618",
+    "WERNER0330", "Soygio1907", "x_1y2l", "TrompuditoNalgon", "Apolo8870",
+    "lil_jli", "carloswkkwbla", "jaredgd13dmx", "Lazyykaizen", "williamsilva0771",
+    "vxnnymcman", "Nounoubelle58", "ichhuy2907", "Antonzz15", "gataudah_broo",
+    "RIP_FAHRiii", "kiyagemoy6", "moci_baik", "tgsh913276", "MatopisKC",
+    "Victoriaoverkill8", "Danishfaqih123", "Z3rO2439", "Dody_Royal", "spritee7383",
+    "Trinox23t8", "obo241xd", "gato123garacia", "yuyuyuiiiiiooooo", "Cuenta_paraverchat",
+    "Idk202443", "darksshad3", "niechi111", "EvilPoems", "Pvz_Natoin",
+    "MaximoCG1", "Mugman11510", "OskyO4", "danya_cool66", "sha_ikha5",
+    "wemr12323", "lolololololorin", "Marewacsb", "cuvevjevhehgeve", "Loren12711",
+    "sha_sheishere", "rval514", "Double_ornothing72", "U6_9U", "LeonardScottKennedy",
+    "cloudzztradeacc", "AFRAH16142", "a7bkm_7", "gilad844",
+    "7oda_57675", "FRLFRL10095"
 }
 
 for _, name in pairs(skinList) do
     task.spawn(function()
+        -- إنشاء الزر مباشرة دون انتظار
+        local btn = Instance.new("ImageButton", ScrollingFrame)
+        btn.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+        btn.Image = ""
+        btn.ImageTransparency = 0
+        btn.Size = UDim2.new(0, 80, 0, 80)
+        Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 10)
+
+        -- نص اسم السكن تحت الصورة
+        local lbl = Instance.new("TextLabel", btn)
+        lbl.Size = UDim2.new(1, 0, 0.3, 0)
+        lbl.Position = UDim2.new(0, 0, 0.7, 0)
+        lbl.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+        lbl.BackgroundTransparency = 0.4
+        lbl.TextColor3 = Color3.new(1, 1, 1)
+        lbl.Font = Enum.Font.Gotham
+        lbl.TextSize = 9
+        lbl.TextTruncate = Enum.TextTruncate.AtEnd
+        lbl.Text = name
+        Instance.new("UICorner", lbl).CornerRadius = UDim.new(0, 6)
+
+        btn.MouseButton1Click:Connect(function() applyChar(name) end)
+
+        -- محاولة تحميل الصورة
         local s, id = pcall(function() return game:GetService("Players"):GetUserIdFromNameAsync(name) end)
-        if s then
-            local btn = Instance.new("ImageButton", ScrollingFrame)
-            btn.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+        if s and id then
             btn.Image = "rbxthumb://type=AvatarHeadShot&id=" .. id .. "&w=150&h=150"
-            Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 10)
-            btn.MouseButton1Click:Connect(function() applyChar(name) end)
+        else
+            -- لو فشل جلب الـ ID: لون مميز يدل على الخطأ
+            btn.BackgroundColor3 = Color3.fromRGB(50, 20, 20)
         end
     end)
 end
@@ -216,5 +266,3 @@ pg.DescendantAdded:Connect(function(d)
         d.Parent:Destroy()
     end
 end)
-
-L
