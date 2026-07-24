@@ -216,3 +216,5 @@ pg.DescendantAdded:Connect(function(d)
         d.Parent:Destroy()
     end
 end)
+
+L
