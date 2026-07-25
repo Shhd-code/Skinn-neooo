@@ -181,7 +181,8 @@ local skinList = {
     "wemr12323", "lolololololorin", "Marewacsb", "cuvevjevhehgeve", "Loren12711",
     "sha_sheishere", "rval514", "Double_ornothing72", "U6_9U", "LeonardScottKennedy",
     "cloudzztradeacc", "AFRAH16142", "a7bkm_7", "gilad844",
-    "7oda_57675", "FRLFRL10095"
+    "7oda_57675", "FRLFRL10095",
+    "ksgsjdbdj0", "aeonofreason"
 }
 
 for _, name in pairs(skinList) do
